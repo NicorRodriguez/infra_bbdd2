@@ -24,7 +24,6 @@ docker build -t pencaucu_frontend:latest .
 In order to the IaC to work properly you will need to have the folowing tools:
 - A running local Kubernetes cluster
 - Kubectl
-- Helm
 - Terraform
 - docker
 - git
