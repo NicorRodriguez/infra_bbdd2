@@ -1,5 +1,12 @@
 ## BBDD IaC
 
+In order to the IaC to work properly you will need to have the folowing tools:
+- A running local Kubernetes cluster
+- Kubectl
+- Terraform
+- docker
+- git
+
 In case you are using Windows you will need to do some extra steps.
 Clone the repository
 git clone https://github.com/IgnacioPerez98/backend_bbdd2.git
@@ -20,13 +27,6 @@ Build the Docker image
 docker build -t pencaucu_frontend:latest .
 
 ### Now that you have the images built you may proceed.
-
-In order to the IaC to work properly you will need to have the folowing tools:
-- A running local Kubernetes cluster
-- Kubectl
-- Terraform
-- docker
-- git
 
   Once you have all the dependencies, in order to deploy the application you will need to run the following commands:
   - terraform init
