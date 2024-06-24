@@ -8,49 +8,49 @@ provider "helm" {
   }
 }
 
-# resource "null_resource" "build_backend" {
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       # Clean up the directory if it exists
-#       rm -rf backend_bbdd2
+resource "null_resource" "build_backend" {
+  provisioner "local-exec" {
+    command = <<EOT
+      # Clean up the directory if it exists
+      rm -rf backend_bbdd2
 
-#       # Clone the repository
-#       git clone https://github.com/IgnacioPerez98/backend_bbdd2.git
+      # Clone the repository
+      git clone https://github.com/IgnacioPerez98/backend_bbdd2.git
 
-#       # Navigate into the cloned directory
-#       cd backend_bbdd2
+      # Navigate into the cloned directory
+      cd backend_bbdd2
 
-#       # Build the Docker image
-#       docker build -t pencaucu_backend:latest .
+      # Build the Docker image
+      docker build -t pencaucu_backend:latest .
 
-#       # Push the Docker image to the registry
-#       docker push pencaucu_backend:latest
-#     EOT
-#     on_failure = "continue"
-#   }
-# }
+      # Push the Docker image to the registry
+      docker push pencaucu_backend:latest
+    EOT
+    on_failure = "continue"
+  }
+}
 
-# resource "null_resource" "build_frontend" {
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       # Clean up the directory if it exists
-#       rm -rf frontend_bbdd2
+resource "null_resource" "build_frontend" {
+  provisioner "local-exec" {
+    command = <<EOT
+      # Clean up the directory if it exists
+      rm -rf frontend_bbdd2
 
-#       # Clone the repository
-#       git clone https://github.com/IgnacioPerez98/frontend_bbdd2.git
+      # Clone the repository
+      git clone https://github.com/IgnacioPerez98/frontend_bbdd2.git
 
-#       # Navigate into the cloned directory
-#       cd frontend_bbdd2
+      # Navigate into the cloned directory
+      cd frontend_bbdd2
 
-#       # Build the Docker image
-#       docker build -t pencaucu_frontend:latest .
+      # Build the Docker image
+      docker build -t pencaucu_frontend:latest .
 
-#       # Push the Docker image to the registry
-#       docker push pencaucu_frontend:latest
-#     EOT
-#     on_failure = "continue"
-#   }
-# }
+      # Push the Docker image to the registry
+      docker push pencaucu_frontend:latest
+    EOT
+    on_failure = "continue"
+  }
+}
 
 resource "kubernetes_namespace" "monitoring" {
 
@@ -429,6 +429,10 @@ resource "kubernetes_deployment" "penca-ucu" {
           name  = "frontend"
           image = "pencaucu_frontend:latest"
           image_pull_policy = "Never" 
+
+          port {
+            container_port = 8080
+          }
         }
       }
     }
@@ -448,8 +452,8 @@ resource "kubernetes_service" "frontend" {
     }
 
     port {
-      port        = 80
-      target_port = 80
+      port        = 8080
+      target_port = 8080
     }
 
     type = "NodePort"
@@ -477,15 +481,3 @@ resource "kubernetes_service" "backend" {
   }
 }
 
-# resource "null_resource" "destroy_resources" {
-#   provisioner "local-exec" {
-#     when    = destroy
-#     command = <<EOT
-#     #!/bin/bash
-#     set -x
-#     # Delete Kubernetes resources
-#     kubectl delete namespace monitoring
-#     kubectl delete namespace database
-#     EOT
-#   }
-# }
