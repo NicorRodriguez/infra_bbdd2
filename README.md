@@ -10,12 +10,17 @@ In order to the IaC to work properly you will need to have the folowing tools:
 In case you are using Windows you will need to do some extra steps.
 
 git clone https://github.com/IgnacioPerez98/backend_bbdd2.git
+
 cd backend_bbdd2
+
 docker build -t pencaucu_backend:latest .
 
 
+
 git clone https://github.com/IgnacioPerez98/frontend_bbdd2.git
+
 cd frontend_bbdd2
+
 docker build -t pencaucu_frontend:latest .
 
 ### Now that you have the images built you may proceed.
