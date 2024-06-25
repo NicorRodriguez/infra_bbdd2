@@ -36,3 +36,7 @@ kubectl port-forward svc/penca-ucu-frontend 8080 -n penca-ucu & \
 kubectl port-forward svc/penca-ucu-backend 3000 -n penca-ucu
 
 You can get an overview of the DB state going to localhost:8081 and for the frontend localhost:8080.
+
+The credentials for grafana are admin admin.
+
+The credentials for admin page are 666 admin.
